@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text Count — Comprehensive Text Statistics</title>
+  <meta name="description" content="Text statistics tool: character counts, word frequency, reading time, Japanese script classification, and social media limits." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <h1 data-i18n="title">Text Count</h1>
+        <p class="subtitle" data-i18n="subtitle">Comprehensive text statistics</p>
+      </div>
+      <div class="header-controls">
+        <button id="langToggle" class="btn btn-ghost" aria-label="Switch language">English</button>
+        <button id="themeToggle" class="btn btn-ghost btn-icon" aria-label="Toggle theme" title="Toggle theme">
+          <span class="theme-icon">☀</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ── Input ─────────────────────────────────── -->
+    <section class="input-section">
+      <textarea
+        id="input"
+        class="main-input"
+        placeholder="Paste or type your text here…"
+        spellcheck="false"
+        autocorrect="off"
+        rows="10"
+      ></textarea>
+      <div class="input-actions">
+        <button id="clearBtn" class="btn btn-secondary" data-i18n="clearBtn">Clear</button>
+        <button id="copyBtn"  class="btn btn-primary"   data-i18n="copyBtn">Copy Stats</button>
+      </div>
+    </section>
+
+    <!-- ── Basic Counts ───────────────────────────── -->
+    <section class="stats-section">
+      <div class="stats-grid">
+
+        <div class="stat-card accent">
+          <div class="stat-value" id="stat-chars">0</div>
+          <div class="stat-label" data-i18n="characters">Characters</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" id="stat-noSpace">0</div>
+          <div class="stat-label" data-i18n="charsNoSpace">Chars (no space)</div>
+        </div>
+
+        <div class="stat-card accent">
+          <div class="stat-value" id="stat-words">0</div>
+          <div class="stat-label" data-i18n="words">Words</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" id="stat-sents">0</div>
+          <div class="stat-label" data-i18n="sentences">Sentences</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" id="stat-paras">0</div>
+          <div class="stat-label" data-i18n="paragraphs">Paragraphs</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" id="stat-lines">0</div>
+          <div class="stat-label" data-i18n="lines">Lines</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" id="stat-unique">0</div>
+          <div class="stat-label" data-i18n="uniqueWords">Unique words</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value" id="stat-avgWL">0.0</div>
+          <div class="stat-label" data-i18n="avgWordLen">Avg. word length</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value small" id="stat-avgSL">0.0 words/sent.</div>
+          <div class="stat-label" data-i18n="avgSentLen">Avg. sentence length</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Reading / Speaking Time ────────────────── -->
+    <section class="time-section panel">
+      <h2 class="panel-title" data-i18n="readingTimeTitle">Reading Time</h2>
+      <div class="time-grid">
+        <div class="time-item">
+          <span class="time-label" data-i18n="easyRead">Easy (200 wpm)</span>
+          <span class="time-value" id="stat-rtEasy">0 sec</span>
+        </div>
+        <div class="time-item">
+          <span class="time-label" data-i18n="fastRead">Fast (400 wpm)</span>
+          <span class="time-value" id="stat-rtFast">0 sec</span>
+        </div>
+      </div>
+      <h2 class="panel-title mt" data-i18n="speakingTimeTitle">Speaking Time</h2>
+      <div class="time-grid">
+        <div class="time-item">
+          <span class="time-label" data-i18n="speaking">Speaking (150 wpm)</span>
+          <span class="time-value" id="stat-st">0 sec</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Japanese Character Stats ───────────────── -->
+    <section class="jp-section panel">
+      <h2 class="panel-title" data-i18n="japaneseTitle">Japanese Characters</h2>
+      <div class="jp-grid">
+
+        <div class="jp-card hiragana">
+          <div class="jp-value" id="stat-hiragana">0</div>
+          <div class="jp-label" data-i18n="hiragana">Hiragana</div>
+        </div>
+        <div class="jp-card katakana">
+          <div class="jp-value" id="stat-katakana">0</div>
+          <div class="jp-label" data-i18n="katakana">Katakana</div>
+        </div>
+        <div class="jp-card kanji">
+          <div class="jp-value" id="stat-kanji">0</div>
+          <div class="jp-label" data-i18n="kanji">Kanji</div>
+        </div>
+        <div class="jp-card">
+          <div class="jp-value" id="stat-ascii">0</div>
+          <div class="jp-label" data-i18n="ascii">ASCII</div>
+        </div>
+        <div class="jp-card">
+          <div class="jp-value" id="stat-digit">0</div>
+          <div class="jp-label" data-i18n="digit">Digits</div>
+        </div>
+        <div class="jp-card">
+          <div class="jp-value" id="stat-punctuation">0</div>
+          <div class="jp-label" data-i18n="punctuation">Punctuation</div>
+        </div>
+        <div class="jp-card">
+          <div class="jp-value" id="stat-other">0</div>
+          <div class="jp-label" data-i18n="other">Other</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Two-column: Word Freq + Char Freq ──────── -->
+    <div class="two-col">
+
+      <!-- Word Frequency -->
+      <section class="panel freq-panel">
+        <h2 class="panel-title" data-i18n="wordFreqTitle">Top 10 Words</h2>
+        <ul id="wordFreqList" class="word-freq-list">
+          <li class="no-data" data-i18n="noWords">No words yet</li>
+        </ul>
+      </section>
+
+      <!-- Character Frequency Chart -->
+      <section class="panel freq-panel">
+        <h2 class="panel-title" data-i18n="charFreqTitle">Top 15 Characters</h2>
+        <div id="charFreqChart" class="char-freq-chart"></div>
+      </section>
+
+    </div>
+
+    <!-- ── Platform Limits ────────────────────────── -->
+    <section class="limits-section panel">
+      <h2 class="panel-title" data-i18n="limitsTitle">Character Limits</h2>
+      <div class="limits-grid">
+        <div id="limit-twitter"          class="limit-item"></div>
+        <div id="limit-sms"              class="limit-item"></div>
+        <div id="limit-facebookPost"     class="limit-item"></div>
+        <div id="limit-instagramBio"     class="limit-item"></div>
+        <div id="limit-instagramCaption" class="limit-item"></div>
+        <div id="limit-linkedinPost"     class="limit-item"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Built by <a href="https://sen.ltd" target="_blank" rel="noopener">SEN LLC</a> · <a href="https://github.com/sen-ltd/text-count" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
