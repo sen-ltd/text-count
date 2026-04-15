@@ -38,3 +38,10 @@ Uses Node.js built-in test runner (`node:test`). No dependencies required.
 ## License
 
 MIT © 2026 SEN LLC (SEN 合同会社)
+
+<!-- sen-publish:links -->
+## Links
+
+- 🌐 Demo: https://sen.ltd/portfolio/text-count/
+- 📝 dev.to: https://dev.to/sendotltd/a-text-statistics-tool-that-classifies-hiragana-katakana-and-kanji-separately-523i
+<!-- /sen-publish:links -->
